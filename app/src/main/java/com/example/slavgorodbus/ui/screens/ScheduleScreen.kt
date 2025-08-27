@@ -7,15 +7,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.slavgorodbus.data.model.BusRoute
-import com.example.slavgorodbus.data.model.BusSchedule
-import com.example.slavgorodbus.ui.components.ScheduleCard
+import com.example.slavgorodbus.data.model.BusSchedule // Убедитесь, что эта модель имеет id и departureTime
+import com.example.slavgorodbus.ui.components.ScheduleCard // Этот компонент должен принимать isNextUpcoming
 import com.example.slavgorodbus.ui.viewmodel.BusViewModel
+import kotlinx.coroutines.delay // <--- ДОБАВЛЕН ИМПОРТ
+import java.text.SimpleDateFormat // <--- ДОБАВЛЕН ИМПОРТ
+import java.util.Calendar         // <--- ДОБАВЛЕН ИМПОРТ
+import java.util.Locale           // <--- ДОБАВЛЕН ИМПОРТ
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,9 +32,10 @@ fun ScheduleScreen(
 ) {
     val schedules = remember(route) {
         if (route != null) {
-            generateSampleSchedules(route.id)
+            // Важно: сортируем по времени отправления для корректной работы логики ближайшего
+            generateSampleSchedules(route.id).sortedBy { it.departureTime }
         } else {
-            emptyList()
+            emptyList<BusSchedule>() // Явно указываем тип
         }
     }
 
@@ -67,7 +74,7 @@ fun ScheduleScreen(
         } else {
             ScheduleDetails(
                 modifier = Modifier.padding(paddingValues),
-                route = route,
+                route = route, // Передаем route, так как он используется в RouteDetailsSummaryCard
                 schedules = schedules,
                 viewModel = viewModel
             )
@@ -99,13 +106,54 @@ private fun NoRouteSelectedMessage(modifier: Modifier = Modifier) {
     }
 }
 
+// Вспомогательная функция для парсинга времени
+private fun parseTimeSimple(timeString: String): Calendar {
+    val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val date = sdf.parse(timeString)
+    val calendar = Calendar.getInstance() // Текущая дата
+    if (date != null) {
+        val parsedCalendar = Calendar.getInstance()
+        parsedCalendar.time = date
+        calendar.set(Calendar.HOUR_OF_DAY, parsedCalendar.get(Calendar.HOUR_OF_DAY))
+        calendar.set(Calendar.MINUTE, parsedCalendar.get(Calendar.MINUTE))
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+    }
+    return calendar
+}
+
+
 @Composable
 private fun ScheduleDetails(
     modifier: Modifier = Modifier,
-    route: BusRoute,
+    route: BusRoute, // route здесь нужен для RouteDetailsSummaryCard
     schedules: List<BusSchedule>,
     viewModel: BusViewModel?
 ) {
+    var currentTime by remember { mutableStateOf(Calendar.getInstance()) }
+    // Состояние для хранения ID ближайшего предстоящего рейса
+    var nextUpcomingScheduleId by remember { mutableStateOf<String?>(null) }
+
+    // LaunchedEffect для определения ближайшего рейса
+    LaunchedEffect(Unit, schedules) { // Перезапускаем при изменении списка schedules
+        while (true) {
+            currentTime = Calendar.getInstance()
+            val now = currentTime
+
+            // Находим ближайший предстоящий рейс из уже отсортированного списка
+            val nextScheduleInstance: BusSchedule? = schedules.firstOrNull { schedule ->
+                val departureTimeCal = parseTimeSimple(schedule.departureTime)
+                // Убедимся, что дата в departureTimeCal соответствует сегодняшней дате,
+                // parseTimeSimple это делает, устанавливая время на текущий день.
+                departureTimeCal.timeInMillis > now.timeInMillis
+            }
+
+            nextUpcomingScheduleId = nextScheduleInstance?.id // Обновляем ID
+
+            delay(30000) // Обновляем, например, каждые 30 секунд (или чаще, если нужен таймер)
+        }
+    }
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(all = 16.dp)
@@ -113,6 +161,8 @@ private fun ScheduleDetails(
         item {
             RouteDetailsSummaryCard(route = route)
             Spacer(modifier = Modifier.height(24.dp))
+            // Если вы хотите отдельную карточку для ближайшего рейса, ее можно добавить здесь,
+            // передав в нее nextScheduleInstance (его нужно будет хранить в состоянии тоже)
             Text(
                 text = "Время отправления:",
                 style = MaterialTheme.typography.titleMedium,
@@ -121,24 +171,35 @@ private fun ScheduleDetails(
             )
         }
 
-        items(
-            items = schedules,
-            key = { schedule -> schedule.id }
-        ) { schedule ->
-            ScheduleCard(
-                schedule = schedule,
-                isFavorite = viewModel?.isFavoriteTime(schedule.id) ?: false,
-                onFavoriteClick = {
-                    viewModel?.let { vm ->
-                        if (vm.isFavoriteTime(schedule.id)) {
-                            vm.removeFavoriteTime(schedule.id)
-                        } else {
-                            vm.addFavoriteTime(schedule)
+        if (schedules.isEmpty()) {
+            item {
+                Text(
+                    "Для этого маршрута расписание отсутствует.",
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else {
+            items<BusSchedule>( // Явно указываем тип
+                items = schedules, // Используем исходный отсортированный список
+                key = { schedule -> schedule.id }
+            ) { schedule: BusSchedule -> // Явно указываем тип
+                ScheduleCard(
+                    schedule = schedule,
+                    isFavorite = viewModel?.isFavoriteTime(schedule.id) ?: false,
+                    onFavoriteClick = {
+                        viewModel?.let { vm ->
+                            if (vm.isFavoriteTime(schedule.id)) {
+                                vm.removeFavoriteTime(schedule.id)
+                            } else {
+                                vm.addFavoriteTime(schedule)
+                            }
                         }
-                    }
-                },
-                modifier = Modifier.padding(vertical = 6.dp)
-            )
+                    },
+                    // Передаем флаг для подсветки
+                    isNextUpcoming = schedule.id == nextUpcomingScheduleId,
+                    modifier = Modifier.padding(vertical = 6.dp)
+                )
+            }
         }
     }
 }
@@ -183,17 +244,17 @@ private fun DetailRow(
         Text(
             text = "$label ",
             style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Medium,
+            fontWeight = FontWeight.Medium, // Можно использовать androidx.compose.ui.text.font.FontWeight.Medium
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis // Можно использовать androidx.compose.ui.text.style.TextOverflow.Ellipsis
         )
         Text(
             text = value,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = if (allowMultiLineValue) Int.MAX_VALUE else 1,
-            overflow = if (allowMultiLineValue) TextOverflow.Clip else TextOverflow.Ellipsis,
+            overflow = if (allowMultiLineValue) TextOverflow.Clip else TextOverflow.Ellipsis, // Так же
             modifier = Modifier.weight(1f)
         )
     }

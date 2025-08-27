@@ -7,7 +7,8 @@ data class BusSchedule(
     val departureTime: String,
     val arrivalTime: String,
     val dayOfWeek: Int,
-    val isWeekend: Boolean = false
+    val isWeekend: Boolean = false,
+    val notes: String? = null
 )
 
 data class ScheduleStop(
