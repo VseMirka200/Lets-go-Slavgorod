@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Поехали! Славгород</string>
+    <string name="error_icon_description">Иконка ошибки загрузки</string>
+    <string name="empty_state_icon_description">Иконка пустого состояния или отсутствия результатов</string>
+
+    // Главное меню
+    <string name="app_name_actual">Маршруты</string>
+    <string name="search_icon_description">Поиск</string>
+    <string name="settings_icon_description">Настройки</string>
+    <string name="settings_section_about_title">О приложении</string>
+
+    // Поиск машрутов
+    <string name="error_loading_routes">Ошибка загрузки маршрутов</string>
+    <string name="routes_not_found">Маршруты не найдены</string>
+    <string name="routes_unavailable">Маршруты недоступны</string>
+    <string name="try_changing_search_query">Попробуйте изменить поисковый запрос</string>
+    <string name="unknown_error">Произошла неизвестная ошибка.</string>
+
+    // Раздель меню "О программе"
+    <string name="about_screen_title">О программе</string>
+    <string name="developer_section_title">Разработал:</string>
+    <string name="developer_name_value">Олюшин Владислав Викторович</string>
+    <string name="links_section_title">Ссылки:</string>
+    <string name="link_text_vk">ВКонтакте</string>
+    <string name="developer_vk_url_value">https://vk.com/vsemirka200</string>
+    <string name="link_text_github">GitHub</string>
+    <string name="developer_github_url_value">https://github.com/VseMirka200/Let-s-go-Slavgorod</string>
+    <string name="error_no_browser">Не удалось открыть ссылку. Проверьте, установлен ли браузер.</string>
+    <string name="error_cant_open_link">Не удалось открыть ссылку.</string>
+
+    // Раздель меню "Избранное"
+    <string name="favorite_times_screen_title">Избранное время</string>
+    <string name="no_favorite_times_icon_desc">Иконка избранного</string>
+    <string name="no_favorite_times_title">Нет избранного времени</string>
+    <string name="favorites_not_working_message">На данный момент функция не работает. В ближайшем обновлении исправлю!</string>
+
+    // Раздель меню "Настройки"
+    <string name="settings_screen_title">Настройки</string>
+    <string name="settings_section_theme_title">Тема приложения</string>
+    <string name="settings_appearance_label">Внешний вид:</string>
+    <string name="settings_select_theme_desc">Выбрать тему</string>
+    <string name="theme_system">Как в системе</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Темная</string>
+
+    // Подробнее о маршрутке
+    <string name="route_details_title">Детали маршрута</string>
+    <string name="back_button_description">Назад</string>
+    <string name="route_info_not_found">Информация о маршруте не найдена.</string>
+    <string name="detail_label_name">Название автобуса:</string>
+    <string name="detail_label_description">Описание:</string>
+    <string name="detail_label_travel_time">Время в пути:</string>
+    <string name="detail_label_detailedPrice">Цена:</string>
+    <string name="detail_label_price_paymentMethods">Способы оплаты:</string>
+
+</resources>
