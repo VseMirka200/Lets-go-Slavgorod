@@ -5,10 +5,10 @@ data class BusSchedule(
     val routeId: String,
     val stopName: String,
     val departureTime: String,
-    val arrivalTime: String,
     val dayOfWeek: Int,
     val isWeekend: Boolean = false,
-    val notes: String? = null
+    val notes: String? = null,
+    val departurePoint: String
 )
 
 data class ScheduleStop(

@@ -25,7 +25,7 @@ import com.example.slavgorodbus.ui.viewmodel.BusViewModel
 @Composable
 fun FavoriteTimesScreen(
     viewModel: BusViewModel,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     val favoriteTimes by viewModel.favoriteTimes.collectAsState()
 
@@ -108,8 +108,8 @@ private fun FavoritesList(
                 routeId = favoriteTime.routeId,
                 stopName = favoriteTime.stopName,
                 departureTime = favoriteTime.departureTime,
-                arrivalTime = favoriteTime.arrivalTime,
-                dayOfWeek = 1
+                dayOfWeek = favoriteTime.dayOfWeek,
+                departurePoint = favoriteTime.departurePoint
             )
 
             ScheduleCard(

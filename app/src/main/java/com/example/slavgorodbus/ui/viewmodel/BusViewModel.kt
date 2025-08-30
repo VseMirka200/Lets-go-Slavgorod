@@ -33,10 +33,10 @@ class BusViewModel() : ViewModel() {
             BusRoute(
                 id = "102",
                 routeNumber = "102",
-                name = "Маршрут автобуса №102",
-                description = "Маршрут между Славгородом и Яровым",
+                name = "Автобус №102",
+                description = "Маршрут Славгород — Яровое",
                 travelTime = "~40 минут",
-                pricePrimary = "35 ₽ город / 55 ₽ межгород",
+                pricePrimary = "38₽ город / 55₽ межгород",
                 paymentMethods = "Нал. / Безнал."
             )
             // Другие маршруты...
@@ -82,9 +82,12 @@ class BusViewModel() : ViewModel() {
             id = schedule.id,
             routeId = schedule.routeId,
             departureTime = schedule.departureTime,
-            arrivalTime = schedule.arrivalTime,
-            stopName = schedule.stopName
+            stopName = schedule.stopName,
+            departurePoint = schedule.departurePoint,
+            dayOfWeek = schedule.dayOfWeek,
+            isActive = true
         )
+
         _favoriteTimes.update { currentFavorites ->
             if (currentFavorites.none { it.id == favoriteTime.id }) {
                 currentFavorites + favoriteTime
