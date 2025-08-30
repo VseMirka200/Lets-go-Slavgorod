@@ -15,10 +15,9 @@
 <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/1.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/2.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/3.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/4.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/5.jpg"/>
 
 ## 🤝 Обратная связь ##
-Нашли ошибку в расписании?
-Есть идеи для улучшения?
-Пишите нам: [@vsemirka200](https://t.me/@vsemirka200)
+Нашли ошибку в расписании? Есть идеи для улучшения? Пишите мне: [@vsemirka200](https://t.me/@vsemirka200)
 
-## 🚀 Планы по развитию ##
+🚀 Планы по развитию
 - Добавление всех городских автобусных маршрутов
-Расчет времени в пути и пересадок
+- Добавление астоновок
+- Добавление карты
