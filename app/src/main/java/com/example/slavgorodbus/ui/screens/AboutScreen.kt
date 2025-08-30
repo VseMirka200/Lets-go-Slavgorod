@@ -8,12 +8,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.example.slavgorodbus.BuildConfig
 import com.example.slavgorodbus.R
 import androidx.core.net.toUri
 
@@ -27,6 +29,8 @@ fun AboutScreen(
     val developerGitHubUrl = stringResource(id = R.string.developer_github_url_value)
     val linkTextVk = stringResource(id = R.string.link_text_vk)
     val linkTextGitHub = stringResource(id = R.string.link_text_github)
+
+    val appVersion = BuildConfig.VERSION_NAME
 
     Column(modifier = modifier.fillMaxSize()) {
         TopAppBar(
@@ -42,44 +46,57 @@ fun AboutScreen(
                 navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-        ) {
-            Text(
-                text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter)
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp)
+                    .padding(bottom = 48.dp),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    stringResource(id = R.string.developer_section_title),
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = developerName,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    stringResource(id = R.string.links_section_title),
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                ClickableLinkText(
+                    text = linkTextVk,
+                    url = developerVkUrl
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                ClickableLinkText(
+                    text = linkTextGitHub,
+                    url = developerGitHubUrl
+                )
+            }
 
             Text(
-                stringResource(id = R.string.developer_section_title),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = developerName,
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                stringResource(id = R.string.links_section_title),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            ClickableLinkText(
-                text = linkTextVk,
-                url = developerVkUrl
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            ClickableLinkText(
-                text = linkTextGitHub,
-                url = developerGitHubUrl
+                text = stringResource(R.string.app_version_label, appVersion),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
             )
         }
     }

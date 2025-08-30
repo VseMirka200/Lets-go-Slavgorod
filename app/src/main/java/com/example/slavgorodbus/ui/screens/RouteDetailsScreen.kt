@@ -51,7 +51,7 @@ fun RouteDetailsScreen(
                     containerColor = route?.color?.let {
                         try {
                             Color(it.toColorInt())
-                        } catch (e: IllegalArgumentException) {
+                        } catch (_: IllegalArgumentException) {
                             MaterialTheme.colorScheme.primaryContainer
                         }
                     } ?: MaterialTheme.colorScheme.primaryContainer,
@@ -114,7 +114,7 @@ private fun RouteNumberHeader(
                 .background(
                     try {
                         Color(colorString.toColorInt())
-                    } catch (e: IllegalArgumentException) {
+                    } catch (_: IllegalArgumentException) {
                         MaterialTheme.colorScheme.primary
                     }.copy(alpha = 0.9f)
                 ),

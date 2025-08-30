@@ -28,6 +28,7 @@ import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.compose.runtime.collectAsState
 
 const val STOP_SLAVGORD_RYNOK = "Славгород (Рынок)"
 const val STOP_YAROVOE_MCHS = "Яровое (МЧС-128)"
@@ -141,7 +142,7 @@ private fun ScheduleListContent(
 
         item {
             ExpandableScheduleSection(
-                title = "Отправление из: $STOP_SLAVGORD_RYNOK",
+                title = "Отправление из $STOP_SLAVGORD_RYNOK",
                 schedules = schedulesSlavgorod,
                 nextUpcomingScheduleId = nextUpcomingSlavgorodId,
                 isExpanded = isSlavgorodSectionExpanded,
@@ -154,7 +155,7 @@ private fun ScheduleListContent(
 
         item {
             ExpandableScheduleSection(
-                title = "Отправление из: $STOP_YAROVOE_MCHS",
+                title = "Отправление из $STOP_YAROVOE_MCHS",
                 schedules = schedulesYarovoe,
                 nextUpcomingScheduleId = nextUpcomingYarovoeId,
                 isExpanded = isYarovoeSectionExpanded,
@@ -194,6 +195,8 @@ private fun ExpandableScheduleSection(
     route: BusRoute,
     departurePointForCheck: String
 ) {
+    val favoriteTimesList by viewModel.favoriteTimes.collectAsState()
+
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -235,11 +238,16 @@ private fun ExpandableScheduleSection(
                             if (schedules.first() != schedule) {
                                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                             }
+
+                            val isCurrentlyFavorite = remember(favoriteTimesList, schedule.id) {
+                                favoriteTimesList.any { it.id == schedule.id && it.isActive }
+                            }
+
                             ScheduleCard(
                                 schedule = schedule,
-                                isFavorite = viewModel.isFavoriteTime(schedule.id),
+                                isFavorite = isCurrentlyFavorite,
                                 onFavoriteClick = {
-                                    if (viewModel.isFavoriteTime(schedule.id)) {
+                                    if (isCurrentlyFavorite) {
                                         viewModel.removeFavoriteTime(schedule.id)
                                     } else {
                                         viewModel.addFavoriteTime(schedule)

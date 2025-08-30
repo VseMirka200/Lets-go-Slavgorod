@@ -1,10 +1,13 @@
 package com.example.slavgorodbus
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -41,6 +44,7 @@ class MainActivity : ComponentActivity() {
         ThemeViewModelFactory(applicationContext)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -59,6 +63,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusScheduleApp(themeViewModel: ThemeViewModel) {
@@ -80,6 +85,7 @@ fun BusScheduleApp(themeViewModel: ThemeViewModel) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavHost(
     navController: NavHostController,
@@ -95,15 +101,16 @@ fun AppNavHost(
         composable(Screen.Home.route) {
             HomeScreen(
                 navController = navController,
-                viewModel = busViewModel,
-                modifier = Modifier
+                viewModel = busViewModel
             )
         }
 
         composable(Screen.FavoriteTimes.route) {
             FavoriteTimesScreen(
                 viewModel = busViewModel,
-                modifier = Modifier
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
             )
         }
 
@@ -137,14 +144,16 @@ fun AppNavHost(
         composable(Screen.Settings.route) {
             SettingsScreen(
                 themeViewModel = themeViewModel,
-                onNavigateToAbout = { navController.navigate(Screen.About.route) },
-                modifier = Modifier
+                onNavigateToAbout = {
+                    Log.d("AppNavHost", "Attempting to navigate to About: route='${Screen.About.route}'")
+                    navController.navigate(Screen.About.route)
+                }
             )
         }
 
         composable(Screen.About.route) {
+            Log.d("AppNavHost", "Displaying AboutScreen for route: ${Screen.About.route}")
             AboutScreen(
-                modifier = Modifier
             )
         }
     }

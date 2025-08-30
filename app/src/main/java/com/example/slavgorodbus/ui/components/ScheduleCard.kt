@@ -1,5 +1,6 @@
 package com.example.slavgorodbus.ui.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -19,8 +20,10 @@ fun ScheduleCard(
     schedule: BusSchedule,
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
+    routeNumber: String? = null,
+    routeName: String? = null,
     isNextUpcoming: Boolean = false,
-    modifier: Modifier = Modifier
+    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -41,8 +44,24 @@ fun ScheduleCard(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
+                if (!routeNumber.isNullOrBlank() || !routeName.isNullOrBlank()) {
+                    val routeText = listOfNotNull(routeNumber?.takeIf { it.isNotBlank() }, routeName?.takeIf { it.isNotBlank() })
+                        .joinToString(" ")
+                        .trim()
+                    if (routeText.isNotEmpty()) {
+                        Text(
+                            text = routeText,
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.Bold
+                            ),
+                            color = if (isNextUpcoming) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f),
+                            fontSize = 15.sp
+                        )
+                    }
+                }
+
                 Text(
-                    text = "Отправление: ${schedule.departureTime}",
+                    text = "Отправление в ${schedule.departureTime}",
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = if (isNextUpcoming) FontWeight.Bold else FontWeight.Normal,
                         fontSize = 18.sp

@@ -10,11 +10,3 @@ data class BusSchedule(
     val notes: String? = null,
     val departurePoint: String
 )
-
-data class ScheduleStop(
-    val id: String,
-    val name: String,
-    val location: String,
-    val latitude: Double? = null,
-    val longitude: Double? = null
-)
