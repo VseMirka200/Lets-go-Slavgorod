@@ -14,15 +14,9 @@
 ## 📱 Скриншоты приложения ##
 <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/1.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/2.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/3.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/4.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/5.jpg"/>
 
-## 📥 Установка ##
-1. [![Скачайте APK-файл на меня](https://img.shields.io/badge/Скачать-APK-success?style=for-the-badge&logo=android)](https://github.com/VseMirka200/Let-s-go-Slavgorod/releases/tag/Let-s-go-Slavgorod0.1.0)
-2. Разрешите установку из неизвестных источников в настройках вашего Android-устройства
-3. Запустите скачанный файл и установите приложение
-4. Откройте "Поехали! Славгород" и начинайте пользоваться!
-
 ## 🤝 Обратная связь ##
 Нашли ошибку в расписании? Есть идеи для улучшения?
-Пишите нам: [указать контакты для обратной связи]
+Пишите нам: [@vsemirka200](https://t.me/@vsemirka200)
 
 ## 🚀 Планы по развитию ##
 - Добавление всех городских автобусных маршрутов
