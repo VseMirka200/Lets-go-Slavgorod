@@ -72,7 +72,7 @@ class NotificationSettingsViewModel(application: Application) : AndroidViewModel
                 getApplication<Application>().dataStore.edit { settings ->
                     settings[NOTIFICATION_MODE_KEY] = mode.name
                     if (mode != NotificationMode.SELECTED_DAYS) {
-                        settings.remove(SELECTED_DAYS_KEY) // Удаляем ключ
+                        settings.remove(SELECTED_DAYS_KEY)
                         Log.d(TAG, "Selected notification days cleared due to mode change to ${mode.name}.")
                     }
                 }

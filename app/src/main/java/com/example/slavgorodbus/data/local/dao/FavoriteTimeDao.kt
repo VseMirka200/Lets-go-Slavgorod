@@ -20,7 +20,7 @@ interface FavoriteTimeDao {
     suspend fun removeFavoriteTime(scheduleId: String)
 
     @Query("SELECT * FROM favorite_times WHERE id = :id")
-    fun getFavoriteTimeById(id: String): Flow<FavoriteTimeEntity?> // Можно оставить Flow или сделать suspend fun
+    fun getFavoriteTimeById(id: String): Flow<FavoriteTimeEntity?>
 
     @Update
     suspend fun updateFavoriteTime(favoriteTime: FavoriteTimeEntity)
