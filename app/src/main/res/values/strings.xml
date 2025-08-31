@@ -90,8 +90,8 @@
     <string name="developer_section_title">Разработал:</string>
     <string name="developer_name_value">VseMirka200</string>
     <string name="links_section_title">Ссылки:</string>
-    <string name="link_text_vk">Telegram</string>
-    <string name="developer_vk_url_value">https://t.me/vsemirka200</string>
+    <string name="link_text_vk">Telegram-группа</string>
+    <string name="developer_vk_url_value">https://t.me/Lets_go_Slavgorod</string>
     <string name="link_text_github">GitHub</string>
     <string name="developer_github_url_value">https://github.com/VseMirka200/Lets-go-Slavgorod</string>
     <string name="error_no_browser">Не удалось открыть ссылку. Проверьте, установлен ли браузер.</string>
