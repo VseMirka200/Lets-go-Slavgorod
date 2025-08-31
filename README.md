@@ -15,7 +15,7 @@
 <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/1.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/2.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/3.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/4.jpg"/>  <img width="135" height="267.25" alt="image" src="https://github.com/VseMirka200/Lets-go-Slavgorod/blob/main/screenshot/5.jpg"/>
 
 ## 🤝 Обратная связь ##
-Нашли ошибку в расписании? Есть идеи для улучшения? Пишите мне: [@vsemirka200](https://t.me/vsemirka200)
+Нашли ошибку или баг? Есть идеи для улучшения? Пишите сюда: [Telegram-группа](https://t.me/Lets_go_Slavgorod))
 
 ## 🚀 Планы по развитию ##
 - Полное покрытие: Добавление всех городских автобусных маршрутов.
